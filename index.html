@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gg.dev.vn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            --bg-body: #000000;
+            --card-accent: #2b0b0b;
+            --text-normal: #dbdee1;
+            --text-muted: #949ba4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-body);
+
+            /* --- [1] THAY HÌNH NỀN WEB TẠI ĐÂY (Dán link ảnh vào trong ngoặc) --- */
+            background-image: url('https://gifdb.com/images/high/black-and-white-cherry-blossoms-aesthetic-minimalist-v3mr74t74vfbwfiv.gif');
+
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden;
+            perspective: 1500px;
+        }
+
+        /* KHUNG CHỨA PROFILE */
+        .card-wrapper {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.1s;
+        }
+
+        .profile-card {
+            width: 600px;
+            max-width: 90vw;
+            background: linear-gradient(180deg, var(--card-accent) 0%, #1a0505 100%);
+            border-radius: 8px;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 20px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+            transform-style: preserve-3d;
+            min-height: 380px;
+        }
+
+        /* BANNER */
+        .banner {
+            height: 210px;
+            width: 100%;
+            background-color: #333;
+            /* Thay banner profile tại đây */
+            background-image: url('https://cdn.discordapp.com/attachments/1429029276706930701/1445728330354524231/standard.gif?ex=693166ee&is=6930156e&hm=3b279ef3e4707fb1356114a6f4312c13e3bd4e21080c80602c47fd15aa02c302&');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px 8px 0 0;
+            transform: translateZ(0px);
+        }
+
+        /* AVATAR */
+        .avatar-holder {
+            position: absolute;
+            top: 120px;
+            /* Vị trí cao */
+            left: 20px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            padding: 8px;
+            background: linear-gradient(180deg, var(--card-accent) 0%, #1a0505 100%);
+            z-index: 10;
+            transform: translateZ(30px);
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            /* Thay avatar tại đây */
+            background-image: url('https://tse2.mm.bing.net/th/id/OIP.bkYzYpuj_atXYobAFlboBwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .avatar-decor {
+            position: absolute;
+            top: -18px;
+            left: -18px;
+            width: 176px;
+            height: 176px;
+            /* Thay khung viền avatar tại đây */
+            background: url('https://cdn.discordapp.com/avatar-decoration-presets/a_c7c09340944962947161642878b27342.png?size=240&passthrough=false');
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 11;
+        }
+
+        /* NỘI DUNG */
+        .content {
+            padding: 60px 20px 30px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 8px 8px;
+            transform: translateZ(20px);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .user-names {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .display-name {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+            cursor: pointer;
+            margin-bottom: 2px;
+        }
+
+        .username {
+            font-size: 14px;
+            color: var(--text-normal);
+            font-weight: 500;
+        }
+
+        /* BADGES (Dạng ảnh) */
+        .badges-container {
+            display: flex;
+            gap: 6px;
+            background: #111214;
+            padding: 4px 6px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: fit-content;
+            margin-top: 10px;
+        }
+
+        .badge-img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            cursor: pointer;
+        }
+
+        /* INFO BOXES */
+        .info-box {
+            margin-top: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-header {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        /* GAME LIST (Dạng ảnh) */
+        .game-grid {
+            display: flex;
+            gap: 8px;
+        }
+
+        .game-img {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            object-fit: cover;
+            /* Hoặc contain nếu icon trong suốt */
+            cursor: pointer;
+            transition: transform 0.2s;
+            background: #000;
+            /* Nền đen cho icon trong suốt */
+        }
+
+        .game-img:hover {
+            transform: translateY(-3px);
+        }
+
+        /* MUSIC PLAYER */
+        .music-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .play-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .play-toggle:hover {
+            color: #da373c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card-wrapper" id="cardWrapper">
+        <div class="profile-card">
+
+            <div class="banner"></div>
+
+            <div class="avatar-holder">
+                <div class="avatar-img" 30
+                    style="background-image: url('https://tse2.mm.bing.net/th/id/OIP.bkYzYpuj_atXYobAFlboBwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3');">
+                </div>
+                <div class="avatar-decor"></div>
+            </div>
+
+            <div class="content">
+                <div class="header-top">
+                    <div class="user-names">
+                        <h1 class="display-name" id="hacker-name" data-value="nov1yt33">nov1yt33</h1>
+                        <div class="username">phamhaiddangws.0000</div>
+                    </div>
+
+                    <div class="badges-container">
+                        <img src="https://cdn.discordapp.com/attachments/1429029276706930701/1445727579993804830/kindpng_1222798.png?ex=6931663b&is=693014bb&hm=56f86bd2dc45dfe7dbcbfd73ad693dad39e8a765ceeb45c7a8bcf309368d32cd&"
+                            class="badge-img" title="HypeSquad Bravery">
+                        <img src="https://cdn.discordapp.com/attachments/1429029276706930701/1445726796841488488/say-hello-to-the-new-active-developer-badge-v0-tswry4vw56z91-removebg-preview.png?ex=69316580&is=69301400&hm=aaba7720ecf3ce861bf6173e869b47b137a3affd03b2a54d00226a7492df9f55&"
+                            class="badge-img" title="Active Developer">
+                        <img src="https://cdn3.emoji.gg/emojis/9204-admin-badge.png" class="badge-img" title="Admin">
+                    </div>
+                </div>
+
+                <div style="font-size: 14px; color: #dbdee1; margin-top: 8px; margin-bottom: 12px; line-height: 1.4;">
+                    im dev :/
+                </div>
+
+                <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+
+                <div class="info-box">
+                    <div class="section-header">Game Collection</div>
+                    <div class="game-grid">
+                        <img src="https://th.bing.com/th/id/R.100ceb3360e2449ec1898ba7c51c1c38?rik=ntoCi5r1kd81SQ&riu=http%3a%2f%2fwww.rw-designer.com%2ficon-image%2f21516-256x256x32.png&ehk=6ix06t6g2dgQwqXE1Pzv%2bAEnzkeYyqRc7YUh35FP%2beY%3d&risl=&pid=ImgRaw&r=0"
+                            class="game-img" title="League of Legends">
+
+                        <img src="https://cdn.discordapp.com/attachments/1429029276706930701/1445732075591303228/OIP-removebg-preview.png?ex=69316a6b&is=693018eb&hm=da0b3bf0bda00badb69cf5c0d0ebdb79501645f1b53936707e64862d72b928d2&"
+                            class="game-img" title="Roblox" style="background: transparent;">
+
+                        <img src="https://media.discordapp.net/attachments/1429029276706930701/1445735130403569715/valorant-logo-icon-11608279985p9bg0vbcxu-removebg-preview.png?ex=69316d43&is=69301bc3&hm=4ffd85e1f26bc968503b96a59d1b39fd5f31dd1b53bd1dfc4d594d4534ce1452&=&format=webp&quality=lossless&width=741&height=758"
+                            class="game-img" title="Valorant">
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="section-header">Listening to Spotify</div>
+                    <div class="music-bar">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fab fa-spotify" style="color: #1ed760; font-size: 24px;"></i>
+                            <div style="font-size: 13px; font-weight: 600; color: #fff;">
+                                <div>Mot Nam Moi Binh An</div>
+                                <div style="font-size: 11px; color: #aaa; font-weight: normal;">by sontungmtp-MTP</div>
+                            </div>
+                        </div>
+                        <button class="play-toggle" onclick="toggleAudio()"><i class="fas fa-play"
+                                id="p-icon"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source
+            src="https://cdn.discordapp.com/attachments/1429029276706930701/1445736333976010794/Mot_Nam_Moi_Binh_An.mp3?ex=69316e62&is=69301ce2&hm=5eaee63de4d4163d70a76dc0b8e9cd750bf76bfb60dea6cd55e1333dc8390ac5&"
+            type="audio/mpeg">
+    </audio>
+
+    <script>
+        // HACKER EFFECT
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+        const nameElement = document.getElementById("hacker-name");
+        function runHackerEffect() {
+            let iteration = 0; const originalText = nameElement.dataset.value;
+            let interval = setInterval(() => {
+                nameElement.innerText = originalText.split("").map((letter, index) => {
+                    if (index < iteration) return originalText[index];
+                    return letters[Math.floor(Math.random() * 26)];
+                }).join("");
+                if (iteration >= originalText.length) clearInterval(interval);
+                iteration += 1 / 3;
+            }, 30);
+        }
+        window.onload = runHackerEffect; nameElement.onmouseover = runHackerEffect;
+
+        // 3D TILT
+        const wrapper = document.getElementById('cardWrapper');
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 40;
+            const y = (window.innerHeight / 2 - e.pageY) / 40;
+            wrapper.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        });
+
+        // MUSIC
+        const audio = document.getElementById('bg-music');
+        const pIcon = document.getElementById('p-icon');
+        let playing = false; audio.volume = 0.3;
+        function toggleAudio() {
+            if (playing) { audio.pause(); pIcon.className = "fas fa-play"; }
+            else { audio.play(); pIcon.className = "fas fa-pause"; }
+            playing = !playing;
+        }
+    </script>
+</body>
+
+</html>
